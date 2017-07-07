@@ -1,5 +1,17 @@
 from spy_details import spy_name,spy_rating,spy_age,spy_salutation,passw
 
+#chat application main function
+def start_chart(spy_name,spy_age,spy_rating):
+    show_menu = True
+    while show_menu:
+        menu_choices = "What do you want to do? \n1. Add a status update \n2. Close Application"
+        menu_choice = int(raw_input(menu_choices))
+        if menu_choice == 1:
+            print 'You chose to update the status'
+        elif menu_choice == 2:
+            show_menu = False
+
+
 #asking to continue as a default user
 question_string="continue as %s [Y/N]?"% (spy_name)
 exisitng=raw_input(question_string)
@@ -7,6 +19,7 @@ if exisitng.upper() =="Y":
     check=raw_input("Enter password")
     if check==passw:
         print "Authentication complete. Welcome %s %s age:%d and rating of %0.2f Proud to have you onboard"%(spy_salutation,spy_name,spy_age,spy_rating)
+        start_chart(spy_name, spy_age, spy_rating)
     else:
         print "password incorrect try again"
 else:
@@ -34,6 +47,7 @@ else:
 
                 print "Authentication complete. Welcome %s age:%d and rating of %0.2f Proud to have you onboard" % (
                 spy_name, spy_age, spy_rating)
+                start_chart(spy_name,spy_age,spy_rating)
             else:
                 print "work on skills"
 
