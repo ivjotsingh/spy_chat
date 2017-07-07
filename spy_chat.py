@@ -1,11 +1,14 @@
-from spy_details import spy_name,spy_rating,spy_age,spy_salutation
+from spy_details import spy_name,spy_rating,spy_age,spy_salutation,passw
 
 #asking to continue as a default user
 question_string="continue as %s [Y/N]?"% (spy_name)
 exisitng=raw_input(question_string)
 if exisitng.upper() =="Y":
-
-    print "Authentication complete. Welcome %s age:%d and rating of %0.2f Proud to have you onboard"%(spy_name,spy_age,spy_rating)
+    check=raw_input("Enter password")
+    if check==passw:
+        print "Authentication complete. Welcome %s %s age:%d and rating of %0.2f Proud to have you onboard"%(spy_salutation,spy_name,spy_age,spy_rating)
+    else:
+        print "password incorrect try again"
 else:
     spy_name = raw_input("Welcome to spy chat, you must tell me your spy name first: ")
 
