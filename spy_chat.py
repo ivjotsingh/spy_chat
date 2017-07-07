@@ -1,13 +1,50 @@
-from spy_details import spy_name,spy_rating,spy_age,spy_salutation,passw
+from spy_details import spy_name,spy_rating,spy_age,spy_salutation,passw,status_messages
+
+#function to status update
+
+def add_status(current_status):
+
+    if current_status!=None:
+        print "your current status message is %s" %(current_status)
+    else:
+        print "no current status"
+
+    default = raw_input("Do you want to select from the older status (y/n)? ")
+
+    if default.upper()=="Y":
+        item_no=1
+        for status in status_messages:
+            print "%d:%s"%(item_no,status)
+            item_no+=1
+        choice = int(raw_input("choose from"))
+        if choice <=len(status_messages):
+
+            updated_status=status_messages[choice-1]
+            print "status updated"
+
+
+    elif default.upper()=="N":
+        status=raw_input("What status message do you want to set?")
+        if len(status)>0:
+            updated_status=status
+            print "status updated"
+            status_messages.append(updated_status)
+
+
+    print "current status now is %s"%(updated_status)
+    return updated_status
 
 #chat application main function
 def start_chart(spy_name,spy_age,spy_rating):
+    current_status=None
     show_menu = True
     while show_menu:
         menu_choices = "What do you want to do? \n1. Add a status update \n2. Close Application"
         menu_choice = int(raw_input(menu_choices))
         if menu_choice == 1:
-            print 'You chose to update the status'
+            current_status=add_status(current_status)
+
+        #exit the loop here
         elif menu_choice == 2:
             show_menu = False
 
