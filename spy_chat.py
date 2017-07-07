@@ -3,10 +3,10 @@ spy_name = raw_input("Welcome to spy chat, you must tell me your spy name first:
 
 #checking so that user doesn't fill a empty name
 if len(spy_name) > 0:
-    print 'Welcome ' + spy_name + '. Glad to have you back with us.'
+    print 'Welcome %s. Glad to have you back with us.'%(spy_name)
     spy_salutation = raw_input("Should I call you Mister or Miss?: ")
     spy_name = spy_salutation + " " + spy_name
-    print "Alright " + spy_name + ". I'd like to know a little bit more about you before we proceed..."
+    print "Alright %s. I'd like to know a little bit more about you before we proceed..." %(spy_name)
 
     #initialising variables
     spy_age = 0
@@ -22,7 +22,7 @@ if len(spy_name) > 0:
             spy_is_online = True
 
 
-            print "Authentication complete. Welcome " + spy_name + " age: " + str(spy_age) + " and rating of: " + str(spy_rating) + " Proud to have you onboard"
+            print "Authentication complete. Welcome %s age:%d and rating of %0.2f Proud to have you onboard"%(spy_name,spy_age,spy_rating)
         else:
             print "work on skills"
 
