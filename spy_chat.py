@@ -1,16 +1,8 @@
-from spy_details import spy, Spy, ChatMessage, friends
+import getpass,string
+from spy_details import spy, Spy, ChatMessage, friends,passs,STATUS_MESSAGES
 from steganography.steganography import Steganography
-from datetime import datetime
 
-STATUS_MESSAGES = ['My name is Bond, James Bond', 'Shaken, not stirred.', 'Keeping the British end up, Sir']
-
-
-print "Hello! Let\'s get started"
-
-question = "Do you want to continue as " + spy.salutation + " " + spy.name + " (Y/N)? "
-existing = raw_input(question)
-
-
+#function to do a status update
 def add_status():
 
     updated_status_message = None
@@ -24,7 +16,7 @@ def add_status():
     default = raw_input("Do you want to select from the older status (y/n)? ")
 
     if default.upper() == "N":
-        new_status_message = raw_input("What status message do you want to set? ")
+        new_status_message = raw_input("What status message do you want to set?")
 
 
         if len(new_status_message) > 0:
@@ -56,28 +48,39 @@ def add_status():
     return updated_status_message
 
 
+#function to add a friend
 def add_friend():
+
 
     new_friend = Spy('','',0,0.0)
 
     new_friend.name = raw_input("Please add your friend's name: ")
-    new_friend.salutation = raw_input("Are they Mr. or Ms.?: ")
+    try:
+        assert any([char not in string.ascii_letters for char in new_friend.name]) is False
 
-    new_friend.name = new_friend.salutation + " " + new_friend.name
+        print "valid name"
+        new_friend.salutation = raw_input("Are they Mr. or Ms.?: ")
 
-    new_friend.age = raw_input("Age?")
-    new_friend.age = int(new_friend.age)
+        new_friend.name = new_friend.salutation + " " + new_friend.name
 
-    new_friend.rating = raw_input("Spy rating?")
-    new_friend.rating = float(new_friend.rating)
+        new_friend.age = int(raw_input("Age?"))
 
-    if len(new_friend.name) > 0 and new_friend.age > 12 and new_friend.rating >= spy.rating:
-        friends.append(new_friend)
-        print 'Friend Added!'
-    else:
-        print 'Sorry! Invalid entry. We can\'t add spy with the details you provided'
 
-    return len(friends)
+        new_friend.rating = float(raw_input("Spy rating?"))
+
+
+        if len(new_friend.name) > 0 and new_friend.age > 12 and new_friend.rating >= 4:
+            friends.append(new_friend)
+            print 'Friend Added!'
+        else:
+            print 'Sorry! Invalid entry. We can\'t add spy with the details you provided'
+
+        return len(friends)
+
+    except AssertionError:
+        print "invalid name"
+
+
 
 
 def select_a_friend():
@@ -103,14 +106,16 @@ def send_message():
     original_image = raw_input("What is the name of the image?")
     output_path = "output.jpg"
     text = raw_input("What do you want to say? ")
-    Steganography.encode(original_image, output_path, text)
+    if len(text):
+        Steganography.encode(original_image, output_path, text)
 
-    new_chat = ChatMessage(text,True)
+        new_chat = ChatMessage(text,True)
 
-    friends[friend_choice].chats.append(new_chat)
+        friends[friend_choice].chats.append(new_chat)
 
-    print "Your secret message image is ready!"
-
+        print "Your secret message image is ready!"
+    else:
+        print "no message to encode"
 
 def read_message():
 
@@ -176,8 +181,19 @@ def start_chat(spy):
     else:
         print 'Sorry you are not of the correct age to be a spy'
 
+print "Hello! Let\'s get started"
+
+
+
+question = "Do you want to continue as " + spy.salutation + " " + spy.name + " (Y/N)? "
+existing = raw_input(question)
 if existing.upper() == "Y":
-    start_chat(spy)
+    check=getpass.getpass("enter the password: ")
+    if check==passs:
+        start_chat(spy)
+    else:
+        print "incorrect password can not log in"
+
 else:
 
     spy = Spy('','',0,0.0)
@@ -185,13 +201,31 @@ else:
 
     spy.name = raw_input("Welcome to spy chat, you must tell me your spy name first: ")
 
-    if len(spy.name) > 0:
-        spy.salutation = raw_input("Should I call you Mr. or Ms.?: ")
-
-        spy.age =int( raw_input("What is your age?"))
-        spy.rating = float(raw_input("What is your spy rating?"))
+    try:
+        assert any([char not in string.ascii_letters for char in spy.name]) is False
 
 
-        start_chat(spy)
-    else:
-        print 'Please add a valid spy name'
+        if len(spy.name) > 0:
+            print "welcome " + spy.name
+            spy.name = spy.name
+            spy.salutation = raw_input("should i call u Mr.  or Miss? ")
+            spy.name = spy.salutation + " " + spy.name
+            print " Okay , Welcome " + spy.name
+            spy.age = int(raw_input("what is your age? "))
+
+            if (spy.age > 12 and spy.age < 50):
+                print "age valid"
+                spy.rating = float(raw_input("Enter the rating:"))
+                spy.is_online = True
+
+            else:
+                print"invalid age"
+            start_chat(spy)
+        else:
+            print" "
+
+    except AssertionError:
+        print"your name must contain letters only"
+
+
+start_chat(spy)

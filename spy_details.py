@@ -1,4 +1,5 @@
 from datetime import datetime
+STATUS_MESSAGES = ['My name is Bond, James Bond', 'Shaken, not stirred.', 'Keeping the British end up, Sir']
 
 class Spy:
 
@@ -27,3 +28,4 @@ friend_three = Spy('No', 'Dr.', 4.95, 37)
 
 
 friends = [friend_one, friend_two, friend_three]
+passs="admin"
